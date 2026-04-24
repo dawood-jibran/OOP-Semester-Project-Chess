@@ -30,6 +30,13 @@ class Piece
         virtual bool isValidMove(int sR, int sC, int eR, int eC, Piece* board[8][8]) const = 0;
 };
 
+class Pawn;
+class Rook;
+class Knight;
+class Bishop;
+class Queen;
+class King;
+
 int main()
 {
     return 0;
