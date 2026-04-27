@@ -92,7 +92,85 @@ class Pawn: public Piece
 
 class Knight;
 class Bishop;
-class Queen;
+class Queen : public Piece
+{
+    public:
+        Queen(Color c) : Piece(c, (c == WHITE) ? 'Q' : 'q') {}
+
+        bool isValidMove(int sR, int sC, int eR, int eC, Piece* board[8][8]) const override 
+        {
+            int rowDiff = eR - sR;
+
+            if (rowDiff < 0) 
+            {
+                rowDiff = -rowDiff;
+            }
+        
+            int colDiff = eC - sC;
+
+            if (colDiff < 0) 
+            {
+                colDiff = -colDiff;
+            }
+
+        bool isStraight = (sR == eR || sC == eC);
+        bool isDiagonal = (rowDiff == colDiff);
+
+        if (!isStraight && !isDiagonal) 
+        {
+            return false;
+        }
+
+        if (sR == eR && sC == eC) 
+        {
+            return false;
+        }
+
+        int rowStep = 0;
+
+        if (eR > sR) 
+        {
+            rowStep = 1;
+        }
+        else if (eR < sR) 
+        {
+            rowStep = -1;
+        }
+
+        int colStep = 0;
+
+        if (eC > sC) 
+        {
+            colStep = 1;
+        }
+        else if (eC < sC) 
+        {
+            colStep = -1;
+        }
+
+        int currR = sR + rowStep;
+        int currC = sC + colStep;
+
+        while (currR != eR || currC != eC) 
+        {
+            if (board[currR][currC] != nullptr) 
+            {
+                return false;
+            }
+
+            currR += rowStep;
+            currC += colStep;
+        }
+
+        if (board[eR][eC] != nullptr && board[eR][eC]->getColor() == this->color) 
+        {
+            return false;
+        }
+
+        return true;
+    }
+};
+
 class King : public Piece 
 {
     public:
