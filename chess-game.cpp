@@ -90,7 +90,43 @@ class Pawn: public Piece
         }
 };
 
-class Knight;
+class Knight: public Piece
+{
+    public:
+        Knight(Color c): Piece(c, (c == WHITE) ? 'N' : 'n') {}
+
+        bool isValidMove(int sR, int sC, int eR, int eC, Piece* board[8][8]) const override
+        {
+            int rowDiff = eR - sR;
+
+            if (rowDiff < 0) 
+            {
+                rowDiff = -rowDiff;
+            }
+
+            int colDiff = eC - sC;
+
+            if (colDiff < 0) 
+            {
+                colDiff = -colDiff;
+            }
+
+            bool isLMove = (rowDiff == 2 && colDiff == 1) || (rowDiff == 1 && colDiff == 2);
+
+            if (!isLMove)
+            {
+                return false;
+            }
+
+            if (board[eR][eC] != nullptr && board[eR][eC]->getColor() == this->color)
+            {
+                return false;
+            }
+
+            return true;
+        }
+};
+
 class Bishop: public Piece
 {
     public:
