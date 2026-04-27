@@ -91,7 +91,58 @@ class Pawn: public Piece
 };
 
 class Knight;
-class Bishop;
+class Bishop: public Piece
+{
+    public:
+        Bishop(Color c) : Piece(c, (c == WHITE) ? 'B' : 'b') {}
+
+        bool isValidMove(int sR, int sC, int eR, int eC, Piece* board[8][8]) const override
+        {
+            int rowDiff = eR - sR;
+
+            if (rowDiff < 0) 
+            {
+                rowDiff = -rowDiff;
+            }
+
+            int colDiff = eC - sC;
+
+            if (colDiff < 0) 
+            {
+                colDiff = -colDiff;
+            }
+
+            if (rowDiff != colDiff || rowDiff == 0)
+            {
+                return false;
+            }
+
+            int rowStep = (eR > sR) ? 1 : -1;
+            int colStep = (eC > sC) ? 1 : -1;
+
+            int currentRow = sR + rowStep;
+            int currentCol = sC + colStep;
+
+            while (currentRow != eR && currentCol != eC)
+            {
+                if (board[currentRow][currentCol] != nullptr)
+                {
+                    return false;
+                }
+
+                currentRow += rowStep;
+                currentCol += colStep;
+            }
+
+            if (board[eR][eC] != nullptr && board[eR][eC]->getColor() == this->color)
+            {
+                return false;
+            }
+
+            return true;            
+        }
+};
+
 class Queen : public Piece
 {
     public:
