@@ -1,28 +1,63 @@
-♟️ Console Chess Game (C++ OOP)
-FAST-NUCES Faisalabad-Chiniot Campus
-Course: Object-Oriented Programming (Spring 2026)
+# ♟️ Console Chess Engine (C++)
 
-Project Group: Muhammad Dawood, Faisal Ali, Abdullah Matloob
+A fully functional, two-player Chess game built with **C++** using **Object-Oriented Programming (OOP)** principles. This project was developed as a core semester project to demonstrate the practical application of software engineering design patterns.
 
-📝 Project Overview
-This project is a fully functional, two-player, console-based Chess game developed in C++. The goal of this project is to apply advanced Object-Oriented Programming (OOP) concepts to manage complex game logic and piece interactions.
+---
 
-🚀 Key Features
-Full Chess Rules: Supports unique movement logic for all pieces (Pawns, Rooks, Knights, Bishops, Queens, and Kings).
+## 🚀 Features
 
-Turn-Based System: Automated turn switching between White and Black players.
+* **Standard Chess Rules**: Implements unique movement logic for all pieces including Pawns, Rooks, Knights, Bishops, Queens, and Kings.
+* **Path Validation**: Advanced logic for sliding pieces (Rook, Bishop, Queen) to ensure they cannot jump over obstacles.
+* **Special Pawn Mechanics**: Supports the initial **two-step move** and diagonal enemy captures.
+* **Capture System**: Automatically removes opponent pieces from the board and frees memory upon capture.
+* **Win Condition**: Real-time detection of King capture to determine the winner and terminate the game.
+* **Clean UI**: An interactive 8x8 coordinate-based grid rendered directly in the console.
 
-Dynamic Board: An 8x8 interactive grid that updates in real-time in the console.
+---
 
-Win Condition: Detection of King capture to conclude the game.
+## 🛠️ OOP Principles Demonstrated
 
-🛠️ OOP Principles Demonstrated
-This project was built from the ground up to showcase the following pillars of OOP:
+This project serves as a comprehensive case study for the four pillars of OOP:
 
-Inheritance: A base Piece class serves as the parent for all specific piece types (e.g., class Pawn : public Piece).
+1.  **Inheritance**: A base `ChessPiece` class provides a blueprint, while specialized classes (e.g., `Pawn`, `Knight`) inherit and extend its functionality.
+2.  **Polymorphism**: Uses a pure virtual function `isValidMove` in the base class, which is overridden by derived pieces to provide specific movement logic at runtime.
+3.  **Encapsulation**: Private and protected members ensure data integrity, with access provided through controlled public methods.
+4.  **Composition**: The `ChessBoard` class manages a 2D array of `ChessPiece` pointers, handling the lifecycle and interactions of all game objects.
 
-Polymorphism: Utilizes virtual functions for isValidMove() so the board can handle various pieces through a single base pointer.
+---
 
-Encapsulation: Private data members and protected attributes ensure data security and proper access control.
+## 📂 Project Structure
 
-Composition: The Board class "has-a" 2D array of Piece objects, managing their lifecycle and interactions.
+```text
+.
+├── ChessGame.h       # Header File containing all the class definitions
+├── ChessGame.cpp     # Implementation of Header File
+├── main.cpp          # Main File
+├── README.md         # Project documentation and guide
+└── .gitignore        # Standard C++ ignore file
+```
+
+---
+
+
+## 🎮 How to Play
+
+The game uses a standard **8x8 coordinate system (0-7)**.
+
+1.  **Selection**: When prompted, enter the **Source** row and column of the piece you want to move.
+2.  **Destination**: Enter the **Target** row and column where you want to move the piece.
+3.  **Turn Management**: The game will automatically switch between White (Uppercase) and Black (Lowercase) turns.
+
+**Example Input:**
+To move a White Pawn from Row 6, Col 4 to Row 4, Col 4:
+* Select Piece (Row Col): `6 4`
+* Target Square (Row Col): `4 4`
+
+---
+
+## 👥 Contributors
+* **Member 1** - *Muhammad Dawood* - [25F-3002]
+* **Member 2** - *Abdullah Matloob* - [25F-3079]
+* **Member 3** - *Faisal Ali* - [25F-3078]
+
+---
