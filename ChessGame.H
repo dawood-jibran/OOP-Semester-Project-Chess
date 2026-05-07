@@ -60,6 +60,13 @@ class Bishop : public ChessPiece
         bool isValidMove(int startRow, int startCol, int endRow, int endCol, ChessPiece* grid[8][8]) const override;
 };
 
+class Queen : public ChessPiece 
+{
+public:
+    Queen(TeamColor color);
+    bool isValidMove(int startRow, int startCol, int endRow, int endCol, ChessPiece* grid[8][8]) const override;
+};
+
 class King : public ChessPiece 
 {
     public:
