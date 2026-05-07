@@ -26,7 +26,6 @@ public:
     virtual bool isValidMove(int startRow, int startCol, int endRow, int endCol, ChessPiece* grid[8][8]) const = 0;
 };
 
-
 class Bishop : public ChessPiece 
 {
 public:
@@ -40,6 +39,5 @@ public:
     King(TeamColor color);
     bool isValidMove(int startRow, int startCol, int endRow, int endCol, ChessPiece* grid[8][8]) const override;
 };
-
 
 #endif
