@@ -27,4 +27,19 @@ public:
 };
 
 
+class Bishop : public ChessPiece 
+{
+public:
+    Bishop(TeamColor color);
+    bool isValidMove(int startRow, int startCol, int endRow, int endCol, ChessPiece* grid[8][8]) const override;
+};
+
+class King : public ChessPiece 
+{
+public:
+    King(TeamColor color);
+    bool isValidMove(int startRow, int startCol, int endRow, int endCol, ChessPiece* grid[8][8]) const override;
+};
+
+
 #endif
