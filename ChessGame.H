@@ -40,4 +40,25 @@ public:
     bool isValidMove(int startRow, int startCol, int endRow, int endCol, ChessPiece* grid[8][8]) const override;
 };
 
+class Pawn : public ChessPiece 
+{
+public:
+    Pawn(TeamColor color);
+    bool isValidMove(int startRow, int startCol, int endRow, int endCol, ChessPiece* grid[8][8]) const override;
+};
+
+class Rook : public ChessPiece 
+{
+public:
+    Rook(TeamColor color);
+    bool isValidMove(int startRow, int startCol, int endRow, int endCol, ChessPiece* grid[8][8]) const override;
+};
+
+class Knight : public ChessPiece 
+{
+public:
+    Knight(TeamColor color);
+    bool isValidMove(int startRow, int startCol, int endRow, int endCol, ChessPiece* grid[8][8]) const override;
+};
+
 #endif
