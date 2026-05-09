@@ -257,6 +257,67 @@ bool ChessBoard::movePiece(int sRow, int sCol, int eRow, int eCol, TeamColor pla
     return false;
 }
 
+bool ChessBoard::isSquareUnderAttack(int row, int col, TeamColor attackerColor) 
+{
+    for (int i = 0; i < 8; i++) 
+    {
+        for (int j = 0; j < 8; j++) 
+        {
+            if (grid[i][j] != nullptr && grid[i][j]->getTeam() == attackerColor) 
+            {
+                if (grid[i][j]->isValidMove(i, j, row, col, grid)) return true;
+            }
+        }
+    }
+    return false;
+}
+
+bool ChessBoard::isKingInCheck(TeamColor kingColor) 
+{
+    int kR = -1, kC = -1;
+    for (int i = 0; i < 8; i++) 
+    {
+        for (int j = 0; j < 8; j++) 
+        {
+            if (grid[i][j] != nullptr && grid[i][j]->getTeam() == kingColor && (grid[i][j]->getPieceSymbol() == 'K' || grid[i][j]->getPieceSymbol() == 'k')) 
+            {
+                kR = i; kC = j; break;
+            }
+        }
+    }
+    return isSquareUnderAttack(kR, kC, (kingColor == WHITE ? BLACK : WHITE));
+}
+
+bool ChessBoard::canEscapeCheck(TeamColor playerColor) 
+{
+    for (int sR = 0; sR < 8; sR++) 
+    {
+        for (int sC = 0; sC < 8; sC++) 
+        {
+            if (grid[sR][sC] != nullptr && grid[sR][sC]->getTeam() == playerColor) 
+            {
+                for (int eR = 0; eR < 8; eR++) 
+                {
+                    for (int eC = 0; eC < 8; eC++) 
+                    {
+                        if (grid[sR][sC]->isValidMove(sR, sC, eR, eC, grid)) 
+                        {
+                            ChessPiece* tempDest = grid[eR][eC];
+                            grid[eR][eC] = grid[sR][sC];
+                            grid[sR][sC] = nullptr;
+                            bool stillInCheck = isKingInCheck(playerColor);
+                            grid[sR][sC] = grid[eR][eC];
+                            grid[eR][eC] = tempDest;
+                            if (!stillInCheck) return true;
+                        }
+                    }
+                }
+            }
+        }
+    }
+    return false;
+}
+
 ChessEngine::ChessEngine() : activeTurn(WHITE) {}
 void ChessEngine::play() 
 {
