@@ -88,6 +88,10 @@ class ChessBoard
         void initializePieces();
         void display();
         bool movePiece(int sRow, int sCol, int eRow, int eCol, TeamColor playerTurn);
+
+        bool isSquareUnderAttack(int row, int col, TeamColor attackerColor);
+        bool isKingInCheck(TeamColor kingColor);
+        bool canEscapeCheck(TeamColor playerColor);
 };
 
 class ChessEngine 
