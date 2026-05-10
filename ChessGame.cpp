@@ -120,13 +120,13 @@ bool Bishop::isValidMove(int startRow, int startCol, int endRow, int endCol, Che
         return false;
     }
     
-    int rowDir = (endRow > startRow) ? 1 : -1;
-    int colDir = (endCol > startCol) ? 1 : -1;
+    int rowDir = (endRow == startRow) ? 0 : (endRow > startRow ? 1 : -1);
+    int colDir = (endCol == startCol) ? 0 : (endCol > startCol ? 1 : -1);
     
     int currR = startRow + rowDir;
     int currC = startCol + colDir;
     
-    while (currR != endRow) 
+    while (currR != endRow && currC != endCol) 
     {
         if (grid[currR][currC] != nullptr) 
         {
