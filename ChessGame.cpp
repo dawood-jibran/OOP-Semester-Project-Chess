@@ -193,19 +193,27 @@ ChessBoard::~ChessBoard()
 
 void ChessBoard::initializePieces() 
 {
-    grid[0][0] = new Rook(BLACK); grid[0][7] = new Rook(BLACK);
-    grid[0][1] = new Knight(BLACK); grid[0][6] = new Knight(BLACK);
-    grid[0][2] = new Bishop(BLACK); grid[0][5] = new Bishop(BLACK);
-    grid[0][3] = new Queen(BLACK); grid[0][4] = new King(BLACK);
+    grid[0][0] = new Rook(BLACK); 
+    grid[0][7] = new Rook(BLACK);
+    grid[0][1] = new Knight(BLACK); 
+    grid[0][6] = new Knight(BLACK);
+    grid[0][2] = new Bishop(BLACK); 
+    grid[0][5] = new Bishop(BLACK);
+    grid[0][3] = new Queen(BLACK); 
+    grid[0][4] = new King(BLACK);
     for (int i = 0; i < 8; i++) 
     {
         grid[1][i] = new Pawn(BLACK);
     }
     
-    grid[7][0] = new Rook(WHITE); grid[7][7] = new Rook(WHITE);
-    grid[7][1] = new Knight(WHITE); grid[7][6] = new Knight(WHITE);
-    grid[7][2] = new Bishop(WHITE); grid[7][5] = new Bishop(WHITE);
-    grid[7][3] = new Queen(WHITE); grid[7][4] = new King(WHITE);
+    grid[7][0] = new Rook(WHITE); 
+    grid[7][7] = new Rook(WHITE);
+    grid[7][1] = new Knight(WHITE); 
+    grid[7][6] = new Knight(WHITE);
+    grid[7][2] = new Bishop(WHITE); 
+    grid[7][5] = new Bishop(WHITE);
+    grid[7][3] = new Queen(WHITE); 
+    grid[7][4] = new King(WHITE);
     for (int i = 0; i < 8; i++) 
     {
         grid[6][i] = new Pawn(WHITE);
