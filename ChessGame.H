@@ -5,13 +5,16 @@
 
 using namespace std;
 
+
 enum TeamColor 
 { 
     WHITE, 
     BLACK 
 };
 
+
 int absoluteValue(int value);
+
 
 class ChessPiece 
 {
@@ -26,8 +29,10 @@ class ChessPiece
     
         TeamColor getTeam() const;
         char getPieceSymbol() const;
+
         virtual bool isValidMove(int startRow, int startCol, int endRow, int endCol, ChessPiece* grid[8][8]) const = 0;
 };
+
 
 class Pawn : public ChessPiece 
 {
@@ -37,6 +42,7 @@ class Pawn : public ChessPiece
         bool isValidMove(int startRow, int startCol, int endRow, int endCol, ChessPiece* grid[8][8]) const override;
 };
 
+
 class Rook : public ChessPiece 
 {
     public:
@@ -45,12 +51,14 @@ class Rook : public ChessPiece
         bool isValidMove(int startRow, int startCol, int endRow, int endCol, ChessPiece* grid[8][8]) const override;
 };
 
+
 class Knight : public ChessPiece 
 {
     public:
         Knight(TeamColor color);
         bool isValidMove(int startRow, int startCol, int endRow, int endCol, ChessPiece* grid[8][8]) const override;
 };
+
 
 class Bishop : public ChessPiece 
 {
@@ -60,12 +68,14 @@ class Bishop : public ChessPiece
         bool isValidMove(int startRow, int startCol, int endRow, int endCol, ChessPiece* grid[8][8]) const override;
 };
 
+
 class Queen : public ChessPiece 
 {
 public:
     Queen(TeamColor color);
     bool isValidMove(int startRow, int startCol, int endRow, int endCol, ChessPiece* grid[8][8]) const override;
 };
+
 
 class King : public ChessPiece 
 {
@@ -74,6 +84,7 @@ class King : public ChessPiece
     
         bool isValidMove(int startRow, int startCol, int endRow, int endCol, ChessPiece* grid[8][8]) const override;
 };
+
 
 class ChessBoard 
 {
@@ -89,6 +100,7 @@ class ChessBoard
         void display();
         bool movePiece(int sRow, int sCol, int eRow, int eCol, TeamColor playerTurn);
 };
+
 
 class ChessEngine 
 {

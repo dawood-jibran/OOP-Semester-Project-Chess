@@ -37,17 +37,17 @@ bool Pawn::isValidMove(int startRow, int startCol, int endRow, int endCol, Chess
         }
     }
 
-    if (startCol == endCol && startRow == initialRow && (endRow - startRow == 2 * direction)) 
+    if ((startCol == endCol) && (startRow == initialRow) && (endRow - startRow == 2 * direction)) 
     {
-        if (grid[startRow + direction][startCol] == nullptr && grid[endRow][endCol] == nullptr) 
+        if ((grid[startRow + direction][startCol] == nullptr) && (grid[endRow][endCol] == nullptr)) 
         {
             return true;
         }
     }
 
-    if (absoluteValue(endCol - startCol) == 1 && (endRow - startRow == direction)) 
+    if ((absoluteValue(endCol - startCol) == 1) && (endRow - startRow == direction)) 
     {
-        if (grid[endRow][endCol] != nullptr && grid[endRow][endCol]->getTeam() != this->team) 
+        if ((grid[endRow][endCol] != nullptr) && (grid[endRow][endCol]->getTeam() != this->team)) 
         {
             return true;
         }
@@ -61,7 +61,7 @@ Rook::Rook(TeamColor color) : ChessPiece(color, (color == WHITE) ? 'R' : 'r') {}
 
 bool Rook::isValidMove(int startRow, int startCol, int endRow, int endCol, ChessPiece* grid[8][8]) const 
 {
-    if (startRow != endRow && startCol != endCol) 
+    if ((startRow != endRow) && (startCol != endCol)) 
     {
         return false;
     }
@@ -71,6 +71,7 @@ bool Rook::isValidMove(int startRow, int startCol, int endRow, int endCol, Chess
     
     int currR = startRow + rowDir;
     int currC = startCol + colDir;
+
     while (currR != endRow || currC != endCol) 
     {
         if (grid[currR][currC] != nullptr) 
@@ -82,7 +83,12 @@ bool Rook::isValidMove(int startRow, int startCol, int endRow, int endCol, Chess
         currC += colDir;
     }
 
-    return (grid[endRow][endCol] == nullptr || grid[endRow][endCol]->getTeam() != team);
+    if((grid[endRow][endCol] == nullptr) || (grid[endRow][endCol]->getTeam() != team)) 
+    {
+        return true;
+    }
+
+    return false;
 }
 
 
@@ -93,7 +99,15 @@ bool Knight::isValidMove(int startRow, int startCol, int endRow, int endCol, Che
     int rDiff = absoluteValue(endRow - startRow);
     int cDiff = absoluteValue(endCol - startCol);
     
-    return ((rDiff == 2 && cDiff == 1) || (rDiff == 1 && cDiff == 2)) && (grid[endRow][endCol] == nullptr || grid[endRow][endCol]->getTeam() != team);
+    if (((rDiff == 2 && cDiff == 1) || (rDiff == 1 && cDiff == 2)))
+    {
+        if((grid[endRow][endCol] == nullptr) || (grid[endRow][endCol]->getTeam() != team)) 
+        {
+            return true;
+        }
+    }
+
+    return false;
 }
 
 
@@ -123,7 +137,12 @@ bool Bishop::isValidMove(int startRow, int startCol, int endRow, int endCol, Che
         currC += colDir;
     }
 
-    return (grid[endRow][endCol] == nullptr || grid[endRow][endCol]->getTeam() != team);
+    if((grid[endRow][endCol] == nullptr) || (grid[endRow][endCol]->getTeam() != team)) 
+    {
+        return true;
+    }
+
+    return false;
 }
 
 
@@ -131,32 +150,20 @@ Queen::Queen(TeamColor color) : ChessPiece(color, (color == WHITE) ? 'Q' : 'q') 
 
 bool Queen::isValidMove(int startRow, int startCol, int endRow, int endCol, ChessPiece* grid[8][8]) const 
 {
-    int rDiff = absoluteValue(endRow - startRow);
-    int cDiff = absoluteValue(endCol - startCol);
-
-    if (startRow != endRow && startCol != endCol && rDiff != cDiff) 
+    Rook tempRook(team);
+    
+    if (tempRook.isValidMove(startRow, startCol, endRow, endCol, grid)) 
     {
-        return false;
-    }
-    
-    int rowDir = (endRow == startRow) ? 0 : (endRow > startRow ? 1 : -1);
-    int colDir = (endCol == startCol) ? 0 : (endCol > startCol ? 1 : -1);
-    
-    int currR = startRow + rowDir;
-    int currC = startCol + colDir;
-    
-    while (currR != endRow || currC != endCol) 
-    {
-        if (grid[currR][currC] != nullptr) 
-        {
-            return false;
-        }
-
-        currR += rowDir;
-        currC += colDir;
+        return true;
     }
 
-    return (grid[endRow][endCol] == nullptr || grid[endRow][endCol]->getTeam() != team);
+    Bishop tempBishop(team);
+    if (tempBishop.isValidMove(startRow, startCol, endRow, endCol, grid)) 
+    {
+        return true;
+    }
+
+    return false;
 }
 
 
@@ -164,7 +171,18 @@ King::King(TeamColor color) : ChessPiece(color, (color == WHITE) ? 'K' : 'k') {}
 
 bool King::isValidMove(int startRow, int startCol, int endRow, int endCol, ChessPiece* grid[8][8]) const 
 {
-    return (absoluteValue(endRow - startRow) <= 1 && absoluteValue(endCol - startCol) <= 1) && (grid[endRow][endCol] == nullptr || grid[endRow][endCol]->getTeam() != team);
+   int rDiff = absoluteValue(endRow - startRow);
+   int cDiff = absoluteValue(endCol - startCol);
+
+   if ((rDiff <= 1) && (cDiff <= 1)) 
+   {
+       if((grid[endRow][endCol] == nullptr) || (grid[endRow][endCol]->getTeam() != team)) 
+       {
+           return true;
+       }
+   }
+
+    return false;
 }
 
 
