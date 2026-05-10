@@ -172,149 +172,31 @@ ChessBoard::ChessBoard()
 {
     for (int i = 0; i < 8; i++) 
     {
-        for (int j = 0; j < 8; j++) 
-        {
-            grid[i][j] = nullptr;
-        }
+        for (int j = 0; j < 8; j++) grid[i][j] = nullptr;
     }
     initializePieces();
 }
 
 ChessBoard::~ChessBoard() 
-{ 
+{
     for (int i = 0; i < 8; i++) 
     {
-        for (int j = 0; j < 8; j++) 
-        {
-            delete grid[i][j];
-        }
+        for (int j = 0; j < 8; j++) delete grid[i][j];
     }
 }
 
 void ChessBoard::initializePieces() 
 {
-    grid[0][0] = new Rook(BLACK); 
-    grid[0][7] = new Rook(BLACK);
-    grid[0][1] = new Knight(BLACK); 
-    grid[0][6] = new Knight(BLACK);
-    grid[0][2] = new Bishop(BLACK); 
-    grid[0][5] = new Bishop(BLACK);
-    grid[0][3] = new Queen(BLACK); 
-    grid[0][4] = new King(BLACK);
-    for (int i = 0; i < 8; i++) 
-    {
-        grid[1][i] = new Pawn(BLACK);
-    }
-    
-    grid[7][0] = new Rook(WHITE); 
-    grid[7][7] = new Rook(WHITE);
-    grid[7][1] = new Knight(WHITE); 
-    grid[7][6] = new Knight(WHITE);
-    grid[7][2] = new Bishop(WHITE); 
-    grid[7][5] = new Bishop(WHITE);
-    grid[7][3] = new Queen(WHITE); 
-    grid[7][4] = new King(WHITE);
-    for (int i = 0; i < 8; i++) 
-    {
-        grid[6][i] = new Pawn(WHITE);
-    }
-}
-
-bool ChessBoard::isSquareUnderAttack(int row, int col, TeamColor attackerColor) 
-{
-    for (int i = 0; i < 8; i++) 
-    {
-        for (int j = 0; j < 8; j++) 
-        {
-            if (grid[i][j] != nullptr && grid[i][j]->getTeam() == attackerColor) 
-            {
-                if (grid[i][j]->isValidMove(i, j, row, col, grid)) 
-                {
-                    return true;
-                }
-            }
-        }
-    }
-    return false;
-}
-
-bool ChessBoard::isKingInCheck(TeamColor kingColor) 
-{
-    int kR = -1, kC = -1;
-    for (int i = 0; i < 8; i++) 
-    {
-        for (int j = 0; j < 8; j++) 
-        {
-            if (grid[i][j] != nullptr && grid[i][j]->getTeam() == kingColor && (grid[i][j]->getPieceSymbol() == 'K' || grid[i][j]->getPieceSymbol() == 'k')) 
-            {
-                kR = i; kC = j; 
-                break;
-            }
-        }
-    }
-    return isSquareUnderAttack(kR, kC, (kingColor == WHITE ? BLACK : WHITE));
-}
-
-bool ChessBoard::canEscapeCheck(TeamColor playerColor) 
-{
-    for (int sR = 0; sR < 8; sR++) 
-    {
-        for (int sC = 0; sC < 8; sC++) 
-        {
-            if (grid[sR][sC] != nullptr && grid[sR][sC]->getTeam() == playerColor) 
-            {
-                for (int eR = 0; eR < 8; eR++) 
-                {
-                    for (int eC = 0; eC < 8; eC++) 
-                    {
-                        if (grid[sR][sC]->isValidMove(sR, sC, eR, eC, grid)) 
-                        {
-                            ChessPiece* tempDest = grid[eR][eC];
-                            grid[eR][eC] = grid[sR][sC];
-                            grid[sR][sC] = nullptr;
-                            bool stillInCheck = isKingInCheck(playerColor);
-                            grid[sR][sC] = grid[eR][eC];
-                            grid[eR][eC] = tempDest;
-                            if (!stillInCheck) return true;
-                        }
-                    }
-                }
-            }
-        }
-    }
-    return false;
-}
-
-bool ChessBoard::movePiece(int sRow, int sCol, int eRow, int eCol, TeamColor playerTurn) 
-{
-    if (sRow < 0 || sRow > 7 || sCol < 0 || sCol > 7 || eRow < 0 || eRow > 7 || eCol < 0 || eCol > 7) 
-    {
-        return false;
-    }
-    ChessPiece* piece = grid[sRow][sCol];
-
-    if (piece == nullptr || piece->getTeam() != playerTurn) 
-    {
-        return false;
-    }
-
-    if (!piece->isValidMove(sRow, sCol, eRow, eCol, grid)) 
-    {
-        return false;
-    }
-
-    ChessPiece* tempDest = grid[eRow][eCol];
-    grid[eRow][eCol] = grid[sRow][sCol];
-    grid[sRow][sCol] = nullptr;
-
-    if (isKingInCheck(playerTurn)) 
-    {
-        grid[sRow][sCol] = grid[eRow][eCol];
-        grid[eRow][eCol] = tempDest;
-        return false;
-    }
-    delete tempDest;
-    return true;
+    grid[0][0] = new Rook(BLACK);   grid[0][7] = new Rook(BLACK);
+    grid[0][1] = new Knight(BLACK); grid[0][6] = new Knight(BLACK);
+    grid[0][2] = new Bishop(BLACK); grid[0][5] = new Bishop(BLACK);
+    grid[0][3] = new Queen(BLACK);  grid[0][4] = new King(BLACK);
+    for (int i = 0; i < 8; i++) grid[1][i] = new Pawn(BLACK);
+    grid[7][0] = new Rook(WHITE);   grid[7][7] = new Rook(WHITE);
+    grid[7][1] = new Knight(WHITE); grid[7][6] = new Knight(WHITE);
+    grid[7][2] = new Bishop(WHITE); grid[7][5] = new Bishop(WHITE);
+    grid[7][3] = new Queen(WHITE);  grid[7][4] = new King(WHITE);
+    for (int i = 0; i < 8; i++) grid[6][i] = new Pawn(WHITE);
 }
 
 void ChessBoard::display() 
@@ -324,10 +206,10 @@ void ChessBoard::display()
     {
         cout << i << " | ";
         for (int j = 0; j < 8; j++) 
-        { 
+        {
             if (grid[i][j] == nullptr) 
             {
-                cout << ". "; 
+                cout << ". ";
             }
             else 
             {
@@ -339,29 +221,67 @@ void ChessBoard::display()
     cout << "   -----------------\n";
 }
 
+bool ChessBoard::movePiece(int sRow, int sCol, int eRow, int eCol, TeamColor playerTurn) 
+{
+    if (sRow < 0 || sRow > 7 || sCol < 0 || sCol > 7 || eRow < 0 || eRow > 7 || eCol < 0 || eCol > 7) 
+    {
+        return false;
+    }
+
+    ChessPiece* activePiece = grid[sRow][sCol];
+    
+    if (activePiece == nullptr || activePiece->getTeam() != playerTurn) 
+    {
+        return false;
+    }
+
+    if (activePiece->isValidMove(sRow, sCol, eRow, eCol, grid)) 
+    {
+        if (grid[eRow][eCol] != nullptr) 
+        {
+            char target = grid[eRow][eCol]->getPieceSymbol();
+            if (target == 'K' || target == 'k') 
+            {
+                cout << "\nGAME OVER! " << (playerTurn == WHITE ? "WHITE" : "BLACK") << " CAPTURED THE KING!\n";
+                exit(0); 
+            }
+            delete grid[eRow][eCol]; 
+        }
+
+        grid[eRow][eCol] = grid[sRow][sCol];
+        grid[sRow][sCol] = nullptr;
+
+        return true;
+    }
+
+    return false;
+}
+
 ChessEngine::ChessEngine() : activeTurn(WHITE) {}
 void ChessEngine::play() 
 {
+    cout << "=================================\n  OOP SEMESTER PROJECT: CHESS\n=================================\n";
     while (true) 
     {
         board.display();
-        if (board.isKingInCheck(activeTurn)) 
-        {
-            if (!board.canEscapeCheck(activeTurn)) 
-            {
-                cout << "\nCHECKMATE! " << (activeTurn == WHITE ? "BLACK" : "WHITE") << " WINS!\n";
-                break;
-            }
-            cout << "!!! YOUR KING IS IN CHECK !!!\n";
-        }
-        cout << (activeTurn == WHITE ? "WHITE" : "BLACK") << "'S TURN\n";
+
+        cout << "\n" << (activeTurn == WHITE ? "WHITE" : "BLACK") << "'S TURN" << endl;
+
         int sR, sC, eR, eC;
-        cout << "Source (Row Col): "; cin >> sR >> sC;
-        cout << "Target (Row Col): "; cin >> eR >> eC;
+
+        cout << "Enter Source (Row Col): "; 
+        if (!(cin >> sR >> sC)) break;
+
+        cout << "Enter Target (Row Col): "; 
+        if (!(cin >> eR >> eC)) break;
+
         if (board.movePiece(sR, sC, eR, eC, activeTurn)) 
         {
             activeTurn = (activeTurn == WHITE) ? BLACK : WHITE;
         }
-        else cout << "[ERROR] Invalid Move (King may be in check).\n";
+        else 
+        {
+            cout << "\n[ERROR] Invalid move. Try again.\n";
+        }
     }
-}   
+}
